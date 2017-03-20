@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			body{
+				background: #ccc;
+				margin: 0;
+			}
+			canvas{
+				background-color: white;
+				display: block;
+				margin: 0 auto;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas width="800" height="600"></canvas>
+		
+		<script type="text/javascript">
+			var oC = document.querySelector("canvas");
+			var ctx = oC.getContext('2d');
+			ctx.lineWidth = '20';
+			ctx.lineCap = 'round';
+			
+			setInterval(function(){
+				var offset = -Math.PI/2;
+				
+				ctx.clearRect(0,0,oC.width, oC.height);
+				
+				var oDate = new Date();
+				var hour = oDate.getHours();
+				var minute = oDate.getMinutes();
+				var second = oDate.getSeconds();
+				var millisecond = oDate.getMilliseconds();
+				
+				ctx.font = '30px a';
+				ctx.fillStyle = '#007AFF';
+				ctx.textAlign = 'center'; 
+				ctx.fillText(`${hour>=12?'PM':'AM'} ${toDou(hour)}:${toDou(minute)}:${toDou(second)}`, 400, 500);
+			
+			//时
+				ctx.beginPath();
+				ctx.arc(400, 300, 50, offset, offset + (hour+ minute/60)%12/12*2*Math.PI);
+				ctx.strokeStyle = 'red';
+				ctx.stroke();
+			
+			//分
+				ctx.beginPath();
+				ctx.arc(400, 300, 75, offset, offset + (minute+ second/60)/60*2*Math.PI);
+				ctx.strokeStyle = 'yellowgreen';
+				ctx.stroke();
+			
+			//秒
+				ctx.beginPath();
+				ctx.arc(400, 300, 100, offset, offset + (second+ millisecond/1000)/60*2*Math.PI);
+				ctx.strokeStyle = 'pink';
+				ctx.stroke();
+			}, 16)
+			
+			function toDou(num){
+				return num>9 ? num : '0'+num;
+			}
+			
+		</script>
+	</body>
+</html>
